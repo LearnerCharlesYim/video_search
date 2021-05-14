@@ -15,7 +15,7 @@ def index(request):
     else:
         return redirect(reverse('xiechengapp:login'))
 
-def serch(request):
+def search(request):
     utoken = request.COOKIES.get('utoken', None)
     if utoken:
         user = User.objects.filter(utoken=utoken).first()
