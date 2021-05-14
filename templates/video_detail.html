@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>短视频</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+<div id="header">
+<div id="logo">
+	<h1><a href="/">短视频 </a></h1>
+	<h2>欢迎您：{{ user.uname }}</h2>
+</div>
+</div>
+<div id="menu-wrap">
+<div id="menu">
+	<ul>
+        <form method="get" action="{% url 'xiechengapp:serch' %}">
+            {% csrf_token %}
+		<li class="first"><button type="submit" style="width: 60px" >查询</button></li>
+
+		<li><input name="kw" style="width: 220px; height: 16px" type="text" name="cityName" placeholder="请输入短视频名称" value=""></li>
+            <li><a href="{% url 'xiechengapp:logout' %}">退出登录</a></li>
+        </form>
+
+	</ul>
+</div>
+</div>
+<hr />
+<div id="latest-post-wrap">
+<div id="latest-post" class="post">
+</div>
+</div>
+<div id="content">
+<div id="recent-posts">
+	<h2>Results</h2>
+
+</div>
+<div style="margin-left: 275px">
+    <h1>{{ video.name }}</h1>
+<video  style="margin-top: -50px" width="800" height="600" controls>
+
+    <source src="{{ video.url }}" type="video/mp4">
+    <source src="{{ video.url }}" type="video/ogg">
+    您的浏览器不支持 video 标签。
+</video>
+</div>
+
+
+</div>
+
+<div id="footer">
+	<p class="legal">&copy;2020 All Rights Reserved.</p>
+	</div>
+</body>
+</html>

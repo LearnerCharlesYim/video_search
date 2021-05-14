@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>短视频</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+<div id="header">
+<div id="logo">
+	<h1><a href="/">短视频 </a></h1>
+	<h2>欢迎您：{{ user.uname }}</h2>
+</div>
+</div>
+<div id="menu-wrap">
+<div id="menu">
+	<ul>
+        <form method="get" action="{% url 'xiechengapp:serch' %}">
+            {% csrf_token %}
+		<li class="first"><button type="submit" style="width: 60px" >查询</button></li>
+
+		<li><input name="kw" style="width: 220px; height: 16px" type="text" name="cityName" placeholder="请输入短视频名称" value=""></li>
+            <li><a href="{% url 'xiechengapp:logout' %}">退出登录</a></li>
+        </form>
+
+	</ul>
+</div>
+</div>
+<hr />
+<div id="latest-post-wrap">
+<div id="latest-post" class="post">
+</div>
+</div>
+<div id="content">
+<div id="recent-posts">
+	<h2>Results</h2>
+
+</div>
+<div id="sidebar">
+	<div style=" margin-top: 20px;overflow-y:auto; overflow-x:auto; height:400px;">
+     <table border="1">
+        <caption>查询结果</caption>
+        <tr>
+            <th id="title" style="width: 34px;text-align: center">序号</th>
+            <th id="title" style="width: 376px">短视频名称</th>
+            <th id="title" style="width: 111px">作者</th>
+            <th id="title" style="width: 66px">类型</th>
+            <th id="title" style="width: 54px">大小</th>
+            <th id="title" style="width: 117px">热度</th>
+            <th id="title" style="width: 46px">进入</th>
+        </tr>
+            {% for video in videos %}
+                <tr>
+                     <th id="title" style="width: 34px;text-align: center">{{ forloop.counter }}</th>
+                    <th id="title" style="width: 376px">{{ video.name }}</th>
+                    <th id="title" style="width: 111px">{{ video.author }}</th>
+                    <th id="title" style="width: 66px">{{ video.format }}</th>
+                    <th id="title" style="width: 105px">{{ video.size }}</th>
+                    <th id="title" style="width: 54px">{{ video.heat }}</th>
+
+                    <th id="data" style="width: 46px"><a href="{% url 'xiechengapp:video_detail' video_id=video.id %}" target="_blank">观看</a></th>
+                </tr>
+            {% endfor %}
+    </table><br>
+</div>
+</div>
+
+<div id="footer">
+	<p class="legal">&copy;2020 All Rights Reserved.</p>
+	</div>
+</body>
+</html>
