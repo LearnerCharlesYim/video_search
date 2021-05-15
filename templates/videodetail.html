@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<form style="width: 800px" class="layui-form" method="get" action="">
+  <div class="layui-form-item">
+    <label class="layui-form-label">视频搜索</label>
+    <div style="overflow: hidden" class="layui-input-block">
+      <input style="float: left;width: 400px" type="text" name="kw" lay-verify="title" autocomplete="off" placeholder="请输入关键字" class="layui-input">
+        <button type="submit" style="margin-left: 20px;float: left" class="layui-btn layui-btn-normal">搜索</button>
+    </div>
+
+  </div>
+</form>
+
+<div class="layui-form">
+  <table class="layui-table">
+    <colgroup>
+      <col width="60">
+      <col width="150">
+      <col width="120">
+      <col width="120">
+      <col width="120">
+      <col width="120">
+      <col width="120">
+
+    </colgroup>
+    <thead>
+    <caption><h2 style="padding: 10px">查询结果:{{ kw }}</h2></caption>
+      <tr>
+        <th>序号</th>
+        <th>短视频名称</th>
+        <th>作者</th>
+        <th>类型</th>
+        <th>大小</th>
+        <th>热度</th>
+        <th>进入</th>
+      </tr>
+    </thead>
+    <tbody>
+            {% for video in videos %}
+                <tr>
+                     <th id="title" style="width: 34px;text-align: center">{{ forloop.counter }}</th>
+                    <th id="title" style="width: 376px">{{ video.name }}</th>
+                    <th id="title" style="width: 111px">{{ video.author }}</th>
+                    <th id="title" style="width: 66px">{{ video.format }}</th>
+                    <th id="title" style="width: 105px">{{ video.size }}MB</th>
+                    <th id="title" style="width: 54px">{{ video.heat }}</th>
+
+                    <th id="data" style="width: 46px"><a href="{% url 'xiechengapp:video_detail' video_id=video.id %}">观看</a></th>
+                </tr>
+            {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}

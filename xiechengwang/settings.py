@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'xiechengapp.apps.XiechengappConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

@@ -38,17 +38,22 @@
 	<h2>Results</h2>
 
 </div>
-<div style="margin-left: 275px">
-    <h1>{{ video.name }}</h1>
-<video  style="margin-top: -50px" width="800" height="600" controls>
+<div id="sidebar">
+	<div style=" margin-top: 20px;overflow-y:auto; overflow-x:auto; height:400px;">
+     <table border="1">
+        <caption>查询结果:{{ kw }}</caption>
+        <tr>
+            <th id="title" style="width: 34px;text-align: center">序号</th>
+            <th id="title" style="width: 376px">短视频名称</th>
+            <th id="title" style="width: 111px">作者</th>
+            <th id="title" style="width: 66px">类型</th>
+            <th id="title" style="width: 54px">大小</th>
+            <th id="title" style="width: 117px">热度</th>
+            <th id="title" style="width: 46px">进入</th>
+        </tr>
 
-    <source src="{{ video.url }}" type="video/mp4">
-    <source src="{{ video.url }}" type="video/ogg">
-    您的浏览器不支持 video 标签。
-</video>
+    </table><br>
 </div>
-
-
 </div>
 
 <div id="footer">

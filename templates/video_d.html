@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="margin-left: 75px">
+    <h1>{{ video.name }}</h1>
+<video  style="margin-top: -50px" width="800" height="600" controls>
+
+    <source src="{{ video.url }}" type="video/mp4">
+    <source src="{{ video.url }}" type="video/ogg">
+    您的浏览器不支持 video 标签。
+</video>
+</div>
+{% endblock %}

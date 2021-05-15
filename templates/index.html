@@ -1,74 +1,72 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>短视频</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="screen" />
-</head>
-<body>
-<div id="header">
-<div id="logo">
-	<h1><a href="/">短视频 </a></h1>
-	<h2>欢迎您：{{ user.uname }}</h2>
-</div>
-</div>
-<div id="menu-wrap">
-<div id="menu">
-	<ul>
-        <form method="get" action="{% url 'xiechengapp:search' %}">
-            {% csrf_token %}
-		<li class="first"><button type="submit" style="width: 60px" >查询</button></li>
+{% extends 'base.html' %}
+{% block head %}
+<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+{% endblock %}
+{% block content %}
+      <div class="layui-card layui-panel">
+        <div class="layui-card-header">
+          短视频可视化分析
+        </div>
+        <div style="overflow: hidden" class="layui-card-body">
+            <div id="pie" style="float: left;width:500px; height:600px;"></div>
+            <div id="bar" style="float: right;width:500px; height:300px;"></div>
+            <div id="line" style="float: right;width:500px; height:270px;"></div>
+        </div>
+      </div>
+    <script>
+        var chart = echarts.init(document.getElementById('pie'), 'white', {renderer: 'canvas'});
+        $(
+            function () {
+                fetchData(chart);
+            }
+        );
 
-		<li><input name="kw" style="width: 220px; height: 16px" type="text" name="cityName" placeholder="请输入短视频名称" value=""></li>
-            <li><a href="{% url 'xiechengapp:logout' %}">退出登录</a></li>
-        </form>
+        function fetchData() {
+            $.ajax({
+                type: "GET",
+                url: "/pie/",
+                dataType: 'json',
+                success: function (result) {
+                    chart.setOption(result.data);
+                }
+            });
+        }
 
-	</ul>
-</div>
-</div>
-<hr />
-<div id="latest-post-wrap">
-<div id="latest-post" class="post">
-</div>
-</div>
-<div id="content">
-<div id="recent-posts">
-	<h2>Results</h2>
+        var chart2 = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+        $(
+            function () {
+                fetchData2(chart2);
+            }
+        );
 
-</div>
-<div id="sidebar">
-	<div style=" margin-top: 20px;overflow-y:auto; overflow-x:auto; height:400px;">
-     <table border="1">
-        <caption>查询结果</caption>
-        <tr>
-            <th id="title" style="width: 34px;text-align: center">序号</th>
-            <th id="title" style="width: 376px">短视频名称</th>
-            <th id="title" style="width: 111px">作者</th>
-            <th id="title" style="width: 66px">类型</th>
-            <th id="title" style="width: 54px">大小</th>
-            <th id="title" style="width: 117px">热度</th>
-            <th id="title" style="width: 46px">进入</th>
-        </tr>
-            {% for video in videos %}
-                <tr>
-                     <th id="title" style="width: 34px;text-align: center">{{ forloop.counter }}</th>
-                    <th id="title" style="width: 376px">{{ video.name }}</th>
-                    <th id="title" style="width: 111px">{{ video.author }}</th>
-                    <th id="title" style="width: 66px">{{ video.format }}</th>
-                    <th id="title" style="width: 105px">{{ video.size }}</th>
-                    <th id="title" style="width: 54px">{{ video.heat }}</th>
+        function fetchData2() {
+            $.ajax({
+                type: "GET",
+                url: "/bar/",
+                dataType: 'json',
+                success: function (result) {
+                    chart2.setOption(result.data);
+                }
+            });
+        }
 
-                    <th id="data" style="width: 46px"><a href="{% url 'xiechengapp:video_detail' video_id=video.id %}" target="_blank">观看</a></th>
-                </tr>
-            {% endfor %}
-    </table><br>
-</div>
-</div>
+        var chart3 = echarts.init(document.getElementById('line'), 'white', {renderer: 'canvas'});
+        $(
+            function () {
+                fetchData3(chart3);
+            }
+        );
 
-<div id="footer">
-	<p class="legal">&copy;2020 All Rights Reserved.</p>
-	</div>
-</body>
-</html>
+        function fetchData3() {
+            $.ajax({
+                type: "GET",
+                url: "/line/",
+                dataType: 'json',
+                success: function (result) {
+                    chart3.setOption(result.data);
+                }
+            });
+        }
+    </script>
+{% endblock %}
